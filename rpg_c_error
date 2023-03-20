@@ -1,0 +1,26 @@
+// =============================================================================
+// IFS_GetError
+// Gets the error number and text for calls to C procedures that failed
+// =============================================================================
+Dcl-Proc  IFS_GetError;
+   Dcl-Pi *n;
+      error Int(10);
+      text  Char(128);
+   End-Pi;
+
+   Dcl-Pr  get_errno  Pointer  ExtProc('__errno')  End-Pr;
+   Dcl-Pr  str_error  Pointer  ExtProc('strerror');
+      errno  Int(10) Value;
+   End-Pr;
+
+   Dcl-S  errno  Int(10) Based(p_errno);
+   Dcl-S  errstr  Char(128) Based(p_errstr);
+
+   p_errno = get_errno();
+   p_errstr = str_error(errno);
+
+   error = errno;
+   text = errstr;
+   Return;
+End-Proc  IFS_GetError;
+  
