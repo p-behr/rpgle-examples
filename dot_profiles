@@ -1,4 +1,0 @@
-.profile
-    exec /QOpenSys/pkgs/bin/bash
-.bashrc
-    export PATH=/QOpenSys/pkgs/bin:$PATH
