@@ -1,0 +1,58 @@
+**free
+
+/IF DEFINED(PSDS)
+    /EOF
+/ENDIF
+/DEFINE PSDS
+
+dcl-ds psds PSDS qualified;
+    mainProc        char(10)        pos(1);
+    statusCode      zoned(5)        pos(11);
+    previousStatus  zoned(5)        pos(16);
+    statementNbr    char(8)         pos(21);  // Source line or statement number
+    rpgCycleRoutine char(8)         pos(29);
+    parmsPassed     zoned(3)        pos(37);
+    exceptionType   char(3)         pos(40);
+    exceptionNbr    char(4)         pos(43);
+    exception       char(7)         samepos(exceptionType);
+ // *n              char(4)         pos(47);  // reserved
+ // *n              char(30)        pos(51);  // work area used by RPG compiler
+    library         char(10)        pos(81);
+    exceptionData   char(80)        pos(91);
+    lastFile        char(10)        pos(175);
+ // *n              char(6)         pos(185);  // unused
+    startDate       char(8)         pos(191);  // same as jobDate w/4-digit year
+    startCentury    zoned(2)        pos(199);
+ // *n              char(8)         pos(201);  // same as lastFile, but truncated
+    lastFileStatus  likeds(lfs_t)   pos(209);
+    jobName         char(10)        pos(244);
+    jobUser         char(10)        pos(254);
+    jobNbr          zoned(6)        pos(264);
+    jobDate         zoned(6)        pos(270);  // same as startDate w/2-digit year
+    sysDate         zoned(6)        pos(276);  // ??
+    sysTime         zoned(6)        pos(282);
+    createDate      zoned(6)        pos(288);
+    createTime      zoned(6)        pos(294);
+    complierLevel   char(4)         pos(300);
+    srcFile         char(10)        pos(304);
+    srcLib          char(10)        pos(314);
+    srcMbr          char(10)        pos(324);
+    programName     char(10)        pos(334);
+    moduleName      char(10)        pos(344);
+    sourceId        bindec(2)       pos(354);  // Source ID matching statementNbr
+    sourceIdLF      bindec(2)       pos(356);  // Source ID matching last file info
+    user            char(10)        pos(358);
+    extErrCode      int(10)         pos(368);
+    dataElements    int(20)         pos(372);  // Elements set by XML-INTO or DATA-INTO
+    internalJobId   char(16)        pos(380);
+    systemName      char(8)         pos(396);
+ // *n              char(50)        pos(404);  // unused
+end-ds;
+
+dcl-ds lfs_t template;
+    status      zoned(5);
+    rpgOpCode   char(6);
+    rpgRoutine  char(8);
+    srcStmtNbr  char(8);
+    recordName  char(8);
+end-ds;
